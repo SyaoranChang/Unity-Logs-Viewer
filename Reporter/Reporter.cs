@@ -302,16 +302,22 @@ public class Reporter : MonoBehaviour
 	string systemMemorySize;
 
 	/// <summary>
-	/// area to makesure interface elements in Special-shaped screen
+	/// Safe area for IMGUI layouts: Top-left origin, same as GUILayout / GUI (Unity Screen.safeArea is bottom-left origin).
 	/// </summary>
 	public Rect SafeScreenArea { get; private set; }
 
 	void UpdateSafeArea()
-    {
+	{
 #if UNITY_2017_2_OR_NEWER
-		SafeScreenArea = Screen.safeArea;
+		Rect safe = Screen.safeArea;
+		// Convert from screen space (bottom-left) to GUI space (top-left).
+		SafeScreenArea = new Rect(
+			safe.x,
+			Screen.height - safe.yMax,
+			safe.width,
+			safe.height);
 #else
-		safeScreenArea = new Rect(0, 0, Screen.width, Screen.height);
+		SafeScreenArea = new Rect(0, 0, Screen.width, Screen.height);
 #endif
 	}
 
@@ -1307,7 +1313,7 @@ public class Reporter : MonoBehaviour
 			float w = 0f;
 			if (collapse)
 				w = barStyle.CalcSize(tempContent).x + 3;
-			countRect.x = Screen.width - w - SafeScreenArea.x;
+			countRect.x = SafeScreenArea.xMax - w;
 			countRect.y = size.y * i;
 			if (beforeHeight > 0)
 				countRect.y += 8;//i will check later why
@@ -1468,7 +1474,7 @@ public class Reporter : MonoBehaviour
 		GUI.skin = graphScrollerSkin;
 
 		Vector2 drag = getDrag();
-		if (graphRect.Contains(new Vector2(downPos.x, SafeScreenArea.height - downPos.y))) {
+		if (graphRect.Contains(new Vector2(downPos.x, Screen.height - downPos.y))) {
 			if (drag.x != 0) {
 				graphScrollerPos.x -= drag.x - oldDrag3;
 				graphScrollerPos.x = Mathf.Max(0, graphScrollerPos.x);
