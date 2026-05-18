@@ -2161,10 +2161,10 @@ public class Reporter : MonoBehaviour
 
     private void SaveLogsToDevice()
     {
-        string filePath = Application.persistentDataPath + "/logs.txt";
+        string timestamp = System.DateTime.Now.ToString("yyyy_MMdd_HHmmss");
+        string filePath = Application.persistentDataPath + "/logs_" + timestamp + ".txt";
         List<string> fileContentsList = new List<string>();
         Debug.Log("Saving logs to " + filePath);
-        File.Delete(filePath);
         for (int i = 0; i < logs.Count; i++)
         {
             fileContentsList.Add(logs[i].logType + "\n" + logs[i].condition + "\n" + logs[i].stacktrace);
