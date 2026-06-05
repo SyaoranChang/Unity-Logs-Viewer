@@ -1,6 +1,9 @@
 ## 更新日志
 
 ```
+2026-06-05
+輸入系統遷移：將 Reporter 由舊版 Input Manager (Old) 改為 Input System Package (New). 新增 ReporterInput.cs 封裝觸控與滑鼠輸入, 畫圈手勢、雙擊、拖曳捲動等操作行為不變. 專案需已安裝 com.unity.inputsystem, 且 Active Input Handling 設為 Input System Package 或 Both
+
 2026-05-15
 修正安全區域：Reporter 將 Unity Screen.safeArea 由螢幕座標(左下原點)轉為 OnGUI 用座標(左上原點), 避免瀏海、打孔與底部手勢區上 UI 偏移；並修正圖表區碰撞與日誌列右側計數欄在 safe 區內的對齊
 
