@@ -1,0 +1,136 @@
+*.apk
+# SDK demo sample APK, track in repo (override *.apk above)
+#.apk 仍會被忽略，只有這一個會進版控。若還要放行第二個路徑，可再加一行 !路徑/檔名.apk。
+#如!Android_SDK/AndroidStudio/demo/demo.apk
+*.booproj
+*.csproj
+*.pdb
+*.pdb.meta
+*.pidb
+*.pidb.meta
+*.sln
+*.slnx
+*.suo
+*.svd
+*.tmp
+//*.unitypackage
+*.unityproj
+*.user
+*.userprefs
+Thumbs.db
+Thumbs.db.meta
+
+# macOS system and transient files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows system and transient files
+Desktop.ini
+desktop.ini
+ehthumbs.db
+ehthumbs_vista.db
+Thumbs.db:encryptable
+$RECYCLE.BIN/
+*.stackdump
+*.lnk
+
+.consulo
+.vs
+.vs/
+.vscode
+.vsconfig
+Assets/AssetStoreTools*
+ExportedObj
+Logs
+Recordings
+UserSettings
+[Aa]ssetBundles
+/[Bb]uild
+/[Bb]uilds
+[Ll]ibrary
+[Oo]bj
+[Rr]elease
+[Ss]creenshot
+[Tt]emp
+[Tt]humbs.[dD][bB]
+[Uu]serSettings
+build_info.txt
+build_info.txt.meta
+format
+locks
+svn.ico
+sysinfo.txt
+/Assets/StreamingAssets/build_info
+/Assets/StreamingAssets/build_info.meta
+/Assets/SystemSave.dat
+/Assets/SystemSave.dat.meta
+/Assets/SaveFile.es3
+/Assets/SaveFile.es3.meta
+/Assets/_MitAssets/AssetbundlesContent/Levels/folders.info
+/Assets/_MitAssets/AssetbundlesContent/Levels/folders.info.meta
+/Assets/_MitAssets/Resources/ConnectSetting.xml
+/Assets/_MitAssets/Resources/ConnectSetting.xml.meta
+/Assets/codeandweb.com/Editor/SettingsTexturePackerImporter.txt
+/Assets/codeandweb.com/Editor/SettingsTexturePackerImporter.txt.meta
+Assets/_TerrainAutoUpgrade
+Assets/_TerrainAutoUpgrade.meta
+Assets/StreamingAssets/bundles
+Assets/StreamingAssets/bundles.meta
+Assets/TEMP_NANINOVEL
+Assets/TEMP_NANINOVEL.meta
+Assets/TEMP_UNITY_COMMON
+Assets/TEMP_UNITY_COMMON.meta
+
+# Naninovel
+# https://github.com/ja67/NaninovelIntegrationExample/blob/master/.gitignore
+/Assets/ThirdParty/Naninovel*
+/Assets/NaninovelData/Saves*
+
+# https://discord.com/channels/545676116871086080/557519193520603136/1339969117054042252
+# Also you don't have to ignore Metadata and ProjectStats. They may be useful. It's just we don't need them in samples. hence they're ignored.
+# But yeah, that's a matter of preference.
+# Bridging and Saves are the only ones that have to be always ignored. Will add that to the docs.
+/Assets/NaninovelData/.nani/Bridging*
+/Assets/NaninovelData/Saves*
+
+# 1.2.0版本實際安裝的路徑
+/Assets/NaninovelData/.nani/Transient/Bridging
+/Assets/NaninovelData/.nani/Transient/Saves
+
+# Addressables相關的路徑
+/DisabledImporterBuildPath
+/ServerData
+
+# 打包 Android 平台時出現，可能是 CMake 的資料夾
+.utmp
+
+# 忽略所有 Excel 的暫存檔
+~$*
+
+# 忽略所有 Asset Hunter PRO 插件在打包版本後產生的檔案
+SerializedBuildInfo
+
+# 忽略 UnityEditorGitTool 插件儲存的檔案
+Assets/Resources/GitHash.asset
+Assets/Resources/GitHash.asset.meta
+Assets/_AX/Scripts/NakamaClient/Resources/Configs/NakamaConfig.asset
+
+# 本地/暫存 UI 素材, 不納入版控
+Assets/_AX/Art/Sprite/Preview
+Assets/_AX/Art/Sprite/Preview.meta
+Assets/_AX/Art/Sprite/UIElement/_PlainBoard
+Assets/_AX/Art/Sprite/UIElement/_PlainBoard.meta
