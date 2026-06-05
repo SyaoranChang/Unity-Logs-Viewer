@@ -25,6 +25,7 @@ using UnityEngine.SceneManagement;
 #if UNITY_CHANGE4
 using UnityEngine.Networking;
 #endif
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 
 [System.Serializable]
@@ -342,13 +343,14 @@ public class Reporter : MonoBehaviour
 
     void OnEnable()
 	{
+		ReporterInput.Enable();
 		if (logs.Count == 0)//if recompile while in play mode
 			clear();
 	}
 
 	void OnDisable()
 	{
-
+		ReporterInput.Disable();
 	}
 
 	void addSample()
@@ -1703,30 +1705,30 @@ public class Reporter : MonoBehaviour
 	int gestureCount = 0;
 	bool isGestureDone()
 	{
-		if (Application.platform == RuntimePlatform.Android ||
-			Application.platform == RuntimePlatform.IPhonePlayer) {
-			if (Input.touches.Length != 1) {
+		if (ReporterInput.IsTouchPlatform) {
+			if (ReporterInput.touchCount != 1) {
 				gestureDetector.Clear();
 				gestureCount = 0;
 			}
 			else {
-				if (Input.touches[0].phase == TouchPhase.Canceled || Input.touches[0].phase == TouchPhase.Ended)
+				var touch = ReporterInput.GetTouch(0);
+				if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
 					gestureDetector.Clear();
-				else if (Input.touches[0].phase == TouchPhase.Moved) {
-					Vector2 p = Input.touches[0].position;
+				else if (touch.phase == TouchPhase.Moved) {
+					Vector2 p = touch.position;
 					if (gestureDetector.Count == 0 || (p - gestureDetector[gestureDetector.Count - 1]).magnitude > 10)
 						gestureDetector.Add(p);
 				}
 			}
 		}
 		else {
-			if (Input.GetMouseButtonUp(0)) {
+			if (ReporterInput.GetMouseButtonUp(0)) {
 				gestureDetector.Clear();
 				gestureCount = 0;
 			}
 			else {
-				if (Input.GetMouseButton(0)) {
-					Vector2 p = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+				if (ReporterInput.GetMouseButton(0)) {
+					Vector2 p = ReporterInput.mousePosition;
 					if (gestureDetector.Count == 0 || (p - gestureDetector[gestureDetector.Count - 1]).magnitude > 10)
 						gestureDetector.Add(p);
 				}
@@ -1771,13 +1773,12 @@ public class Reporter : MonoBehaviour
 	float lastClickTime = -1;
 	bool isDoubleClickDone()
 	{
-		if (Application.platform == RuntimePlatform.Android ||
-		   Application.platform == RuntimePlatform.IPhonePlayer) {
-			if (Input.touches.Length != 1) {
+		if (ReporterInput.IsTouchPlatform) {
+			if (ReporterInput.touchCount != 1) {
 				lastClickTime = -1;
 			}
 			else {
-				if (Input.touches[0].phase == TouchPhase.Began) {
+				if (ReporterInput.GetTouch(0).phase == TouchPhase.Began) {
 					if (lastClickTime == -1)
 						lastClickTime = Time.realtimeSinceStartup;
 					else if (Time.realtimeSinceStartup - lastClickTime < 0.2f) {
@@ -1791,7 +1792,7 @@ public class Reporter : MonoBehaviour
 			}
 		}
 		else {
-			if (Input.GetMouseButtonDown(0)) {
+			if (ReporterInput.GetMouseButtonDown(0)) {
 				if (lastClickTime == -1)
 					lastClickTime = Time.realtimeSinceStartup;
 				else if (Time.realtimeSinceStartup - lastClickTime < 0.2f) {
@@ -1812,18 +1813,16 @@ public class Reporter : MonoBehaviour
 	Vector2 downPos;
 	Vector2 getDownPos()
 	{
-		if (Application.platform == RuntimePlatform.Android ||
-		   Application.platform == RuntimePlatform.IPhonePlayer) {
+		if (ReporterInput.IsTouchPlatform) {
 
-			if (Input.touches.Length == 1 && Input.touches[0].phase == TouchPhase.Began) {
-				downPos = Input.touches[0].position;
+			if (ReporterInput.touchCount == 1 && ReporterInput.GetTouch(0).phase == TouchPhase.Began) {
+				downPos = ReporterInput.GetTouch(0).position;
 				return downPos;
 			}
 		}
 		else {
-			if (Input.GetMouseButtonDown(0)) {
-				downPos.x = Input.mousePosition.x;
-				downPos.y = Input.mousePosition.y;
+			if (ReporterInput.GetMouseButtonDown(0)) {
+				downPos = ReporterInput.mousePosition;
 				return downPos;
 			}
 		}
@@ -1836,16 +1835,15 @@ public class Reporter : MonoBehaviour
 	Vector2 getDrag()
 	{
 
-		if (Application.platform == RuntimePlatform.Android ||
-			Application.platform == RuntimePlatform.IPhonePlayer) {
-			if (Input.touches.Length != 1) {
+		if (ReporterInput.IsTouchPlatform) {
+			if (ReporterInput.touchCount != 1) {
 				return Vector2.zero;
 			}
-			return Input.touches[0].position - downPos;
+			return ReporterInput.GetTouch(0).position - downPos;
 		}
 		else {
-			if (Input.GetMouseButton(0)) {
-				mousePosition = Input.mousePosition;
+			if (ReporterInput.GetMouseButton(0)) {
+				mousePosition = ReporterInput.mousePosition;
 				return mousePosition - downPos;
 			}
 			else {
@@ -2172,5 +2170,4 @@ public class Reporter : MonoBehaviour
         File.WriteAllLines(filePath, fileContentsList.ToArray());
     }
 }
-
 
